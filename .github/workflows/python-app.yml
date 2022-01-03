@@ -34,3 +34,11 @@ jobs:
     - name: Test with pytest
       run: |
         python hello-world.py
+    - name: slack-send
+      id: slack
+      uses: slackapi/slack-github-action@v1.16.0
+      with:
+        payload: "{\"channel\": \"#일반\", \"username\": \"bot\", \"text\": \"GitHub Action passed\", \"icon_emoji\": \":bot:\"}"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
