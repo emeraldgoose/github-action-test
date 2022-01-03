@@ -38,17 +38,8 @@ jobs:
       id: slack
       uses: slackapi/slack-github-action@v1.16.0
       with:
-        payload: "{
-          \"channel\": \"#일반\", \"username\": \"bot\", \"text\": \"<!here> GitHub Action passed \", \"icon_emoji\": \":robot_face:\",\"attachments":[{
-            "fallback":"New open task [Urgent]: <http://url_to_task|Slack 메시지 첨부 파일 테스트>",
-            "pretext":"New open task [urgent]: <http://url_to_task|Slack 메시지 첨부 파일 테스트",
-            "color":"#D0000",
-            "fields": [{
-              "title" : "Note",
-              "value" : "This is much easier than I thought it would be.",
-              "short" : false
-            }]
-          }]\"}"
+        status: ${{ job.status }}
+        fields: repo, message, commit, author, action, eventName, job, took
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
