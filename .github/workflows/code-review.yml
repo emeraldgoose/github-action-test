@@ -32,7 +32,7 @@ jobs:
             let diff_output = "";
             async function readFileAndStore() {
               try {
-                diff_output = await fs.readFile('example.txt', 'utf8');
+                diff_output = await fs.readFile('diff.txt', 'utf8');
               } catch (err) {
                 console.error('파일을 읽는 중 오류 발생:', err);
               }
