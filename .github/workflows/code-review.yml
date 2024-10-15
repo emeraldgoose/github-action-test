@@ -35,7 +35,7 @@ jobs:
                 return;
               }
               const diff_output = data;
-            }
+            });
             console.log('diff:', diff_output)
             
             const { GoogleGenerativeAI } = require("@google/generative-ai");
