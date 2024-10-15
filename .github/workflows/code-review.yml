@@ -24,15 +24,21 @@ jobs:
           git fetch origin "${{ github.event.pull_request.base.ref }}"
           git fetch origin "${{ github.event.pull_request.head.ref }}"
           git diff "origin/${{ github.event.pull_request.base.ref }}" > "diff.txt"
-          export DIFF_OUTPUT=$(cat "diff.txt")
       - name: Run Gemini-1.5-flash
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require("fs");
-            const { GoogleGenerativeAI } = require("@google/generative-ai");
-            const diff_output = process.env.DIFF_OUTPUT;
+            fs.readFile("diff.txt", "utf8", (err, data) => {
+              if(err) {
+                console.log("Err file read");
+                return;
+              }
+              const diff_output = data;
+            }
+            console.log('diff:', diff_output)
             
+            const { GoogleGenerativeAI } = require("@google/generative-ai");
             const genAI = new GoogleGenerativeAI("${{ secrets.GEMINI_API_KEY }}");
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
             
