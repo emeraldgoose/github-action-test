@@ -31,14 +31,10 @@ jobs:
       #       const { GoogleGenerativeAI } = require("@google/generative-ai");
       #       const genAI = new GoogleGenerativeAI("${{ secrets.GEMINI_API_KEY }}");
       #       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
-      - name: Comment a pull_request
-        uses: actions/github-script@v6
+      - uses: sfontaneldatadome/add-pr-review-comment@v1
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: 'Auto-Reviewer',
-              repo: context.repo.repo,
-              body: 'hello'
-            })
+          message: |
+            [{"path":"math_.py","line":4,"text":"comment1","side":"RIGHT"},{"path":"math_.py","line":10,"text":"comment2","side":"LEFT"}]
+          repo-token: ${{ secrets.GH_TOKEN }}
+          repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
+          allow-repeats: false # This is the default
