@@ -31,19 +31,8 @@ jobs:
       #       const { GoogleGenerativeAI } = require("@google/generative-ai");
       #       const genAI = new GoogleGenerativeAI("${{ secrets.GEMINI_API_KEY }}");
       #       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
-      - name: Comment on the pull request
-        uses: actions/github-script@v7
+      - name: Comment a pull_request
+        uses: mb2dev/github-action-comment-pull-request@1.0.0
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
-          script: |
-            const { context } = require('@actions/github');
-            const issue_number = context.issue.number;
-            const comment = "Thank you for your contribution! We will review your PR soon.";
-            
-            // Comment on the pull request
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issue_number,
-              body: comment,
-            });
+          message: "Hello, It's my first comment with Github action !"
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
