@@ -30,13 +30,14 @@ jobs:
           script: |
             const fs = require("fs");
             let diff_output = "";
-            fs.readFile("diff.txt", "utf8", (err, data) => {
-              if(err) {
-                console.log("Err file read");
-                return;
+            async function readFileAndStore() {
+              try {
+                diff_output = await fs.readFile('example.txt', 'utf8');
+              } catch (err) {
+                console.error('파일을 읽는 중 오류 발생:', err);
               }
-              diff_output = data;
-            });
+            }
+            readFileAndStore();
             console.log('diff:', diff_output)
             
             const { GoogleGenerativeAI } = require("@google/generative-ai");
