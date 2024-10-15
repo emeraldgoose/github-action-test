@@ -14,17 +14,36 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+      - name: Install GoogleGenerativeAI
+        run: |
+          npm install @google/generative-ai
       - name: Get git diff
-        env:
-          PULL_REQUEST_HEAD_REF: "${{ github.event.pull_request.head.ref }}"
-          PULL_REQUEST_BASE_REF: "${{ github.event.pull_request.base.ref }}"
-        run: |-
-          git fetch origin "${{ env.PULL_REQUEST_HEAD_REF }}"
-          git fetch origin "${{ env.PULL_REQUEST_BASE_REF }}"
-          git checkout "${{ env.PULL_REQUEST_HEAD_REF }}"
-          git diff "origin/${{ env.PULL_REQUEST_BASE_REF }}" > "diff.txt"
-          {
-            echo "pull_request_diff<<EOF";
-            cat "diff.txt";
-            echo 'EOF';
-          } >> $GITHUB_OUTPUT
+        run: |
+          git fetch origin "${{ github.event.pull_request.base.ref }}"
+          git fetch origin "${{ github.event.pull_request.head.ref }}"
+          git diff "origin/${{ github.event.pull_request.base.ref }}" > "diff.txt"
+      # - name: Run
+      #   uses: actions/github-script@v7
+      #   with:
+      #     script: |
+      #       const { GoogleGenerativeAI } = require("@google/generative-ai");
+      #       const genAI = new GoogleGenerativeAI("${{ secrets.GEMINI_API_KEY }}");
+      #       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+      - name: Comment on the pull request
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            const { context } = require('@actions/github');
+            const issue_number = context.issue.number;
+            const comment = "Thank you for your contribution! We will review your PR soon.";
+            
+            // Comment on the pull request
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              body: comment,
+            });
