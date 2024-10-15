@@ -45,13 +45,14 @@ jobs:
             fs.writeFileSync('res.txt',text);
             console.log('Save Results!')
       - name: Export System Var
+        id: result
         run: |
           COMMENT=$(cat "res.txt")
-          echo "comment=$COMMENT" >> $GITHUB_ENV
+          echo "comment=$COMMENT" >> "$GITHUB_OUTPUT"
       - name: Add Pull Request Review Comment
         uses: nbaztec/add-pr-review-comment@v1.0.7
         with:
-          comments: ${{ env.comment }}
+          comments: ${{ steps.result.outputs.comment }}
           repo-token: ${{ secrets.GH_TOKEN }}
           repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
           allow-repeats: false # This is the default
