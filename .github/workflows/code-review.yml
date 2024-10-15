@@ -47,11 +47,11 @@ jobs:
       - name: Export System Var
         run: |
           export COMMENT=$(cat "res.txt")
+          echo "comment=$COMMENT" >> $GITHUB_ENV
       - name: Add Pull Request Review Comment
         uses: nbaztec/add-pr-review-comment@v1.0.7
         with:
-          comments: |
-            $COMMENT
+          comments: ${{ env.comment }}
           repo-token: ${{ secrets.GH_TOKEN }}
           repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
           allow-repeats: false # This is the default
