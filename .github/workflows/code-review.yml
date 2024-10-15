@@ -28,17 +28,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const fs = require('fs').promises;
-            let diff_output = "";
-            async function readFileAndStore() {
-              try {
-                diff_output = await fs.readFile('diff.txt', 'utf8');
-              } catch (err) {
-                console.error('파일을 읽는 중 오류 발생:', err);
-              }
-            }
-            readFileAndStore();
-            console.log('diff:', diff_output)
+            const fs = require("fs");
+            const diff_output = fs.readFileSync("diff.txt",'utf8');
+            console.log('diff:',diff_output)
             
             const { GoogleGenerativeAI } = require("@google/generative-ai");
             const genAI = new GoogleGenerativeAI("${{ secrets.GEMINI_API_KEY }}");
