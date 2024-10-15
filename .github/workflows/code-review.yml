@@ -46,7 +46,7 @@ jobs:
             console.log('Save Results!')
       - name: output
         id: store
-        runs: |
+        run: |
           COMMENT=$(sed '/^```/d' "res.txt")
           echo "comment=$COMMENT" >> "$GITHUB_OUTPUT"
       - name: Add Pull Request Review Comment
