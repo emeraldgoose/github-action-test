@@ -29,12 +29,13 @@ jobs:
         with:
           script: |
             const fs = require("fs");
+            let diff_output = "";
             fs.readFile("diff.txt", "utf8", (err, data) => {
               if(err) {
                 console.log("Err file read");
                 return;
               }
-              const diff_output = data;
+              diff_output = data;
             });
             console.log('diff:', diff_output)
             
