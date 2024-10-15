@@ -47,7 +47,7 @@ jobs:
       - name: output
         id: store
         run: |
-          COMMENT=$(sed '/^```/d' "res.txt")
+          COMMENT=$(sed '/^```/d' res.txt | jq -c .)
           echo "comment=$COMMENT" >> "$GITHUB_OUTPUT"
       - name: Add Pull Request Review Comment
         uses: nbaztec/add-pr-review-comment@v1.0.7
