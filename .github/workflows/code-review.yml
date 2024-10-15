@@ -31,7 +31,7 @@ jobs:
       #       const { GoogleGenerativeAI } = require("@google/generative-ai");
       #       const genAI = new GoogleGenerativeAI("${{ secrets.GEMINI_API_KEY }}");
       #       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
-      - uses: sfontaneldatadome/add-pr-review-comment@v1
+      - uses: sfontaneldatadome/add-pr-review-comment@multiline2
         with:
           message: |
             [{"path":"math_.py","line":4,"text":"comment1","side":"RIGHT"},{"path":"math_.py","line":10,"text":"comment2","side":"LEFT"}]
