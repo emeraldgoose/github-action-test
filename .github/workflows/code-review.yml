@@ -1,9 +1,5 @@
 name: code-review
 
-permissions:
-  contents: read
-  pull-requests: write
-
 on:
   pull_request:
     types: [opened, reopened, synchronize]
@@ -12,17 +8,23 @@ on:
 jobs:
   review:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
       - name: Get git diff
-        run: |
-          git fetch origin "${{ github.event.pull_request.head.ref }}"
-          git fetch origin "${{ github.event.pull_request.base.ref }}"
-          git checkout "${{ github.event.pull_request.head.ref }}"
-          git diff "origin/${{ github.event.pull_request.base.ref }}" > "diff.txt"
+        env:
+          PULL_REQUEST_HEAD_REF: "${{ github.event.pull_request.head.ref }}"
+          PULL_REQUEST_BASE_REF: "${{ github.event.pull_request.base.ref }}"
+        run: |-
+          git fetch origin "${{ env.PULL_REQUEST_HEAD_REF }}"
+          git fetch origin "${{ env.PULL_REQUEST_BASE_REF }}"
+          git checkout "${{ env.PULL_REQUEST_HEAD_REF }}"
+          git diff "origin/${{ env.PULL_REQUEST_BASE_REF }}" > "diff.txt"
           {
             echo "pull_request_diff<<EOF";
             cat "diff.txt";
-            echo "EOF";
+            echo 'EOF';
           } >> $GITHUB_OUTPUT
