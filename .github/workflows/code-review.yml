@@ -23,7 +23,7 @@ jobs:
         run: |
           git fetch origin "${{ github.event.pull_request.base.ref }}"
           git fetch origin "${{ github.event.pull_request.head.ref }}"
-          git diff "origin/${{ github.event.pull_request.base.ref }}" > "diff.txt"
+          git diff --unified=0 "origin/${{ github.event.pull_request.base.ref }}" > "diff.txt"
       - name: Run Gemini-1.5-flash
         uses: actions/github-script@v7
         with:
