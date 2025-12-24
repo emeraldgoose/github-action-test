@@ -24,3 +24,8 @@ def isnum(a: Any):
         except Exception:
             pass
     return False
+
+def divide(a: int, b: int) -> float:
+    if b == 0:
+        raise ValueException("b cannot be zero")
+    return a / b
