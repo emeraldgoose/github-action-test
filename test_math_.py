@@ -44,3 +44,8 @@ def test_divide_AssertionError():
     b = 0
     with pytest.raises(ZeroDivisionError):
         divide(a, b)
+
+def test_divide_pass():
+    a = 1
+    b = 2
+    assert divide(a, b) == a / b
