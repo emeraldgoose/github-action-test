@@ -38,3 +38,9 @@ def test_sum_pass_2():
     a = [-1,-2,-3,-4,-5]
     b = [1,2,3,4,5]
     assert list_sum(a, b) == [0,0,0,0,0]
+
+def test_divide_AssertionError():
+    a = 1
+    b = 0
+    with pytest.raises(ZeroDivisionError):
+        divide(a, b)

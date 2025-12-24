@@ -27,5 +27,5 @@ def isnum(a: Any):
 
 def divide(a: int, b: int) -> float:
     if b == 0:
-        raise ValueException("b cannot be zero")
+        raise ZeroDivisionError("b must be nonzero")
     return a / b
