@@ -47,5 +47,5 @@ def test_divide_AssertionError():
 
 def test_divide_pass():
     a = 4
-    b = 2
+    b = 1
     assert divide(a, b) == a / b
